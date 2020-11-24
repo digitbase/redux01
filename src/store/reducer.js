@@ -1,4 +1,10 @@
-import { CHANGE_INPUT, ADD_ITEM, DEL_ITEM, GET_LIST } from "./actionTypes";
+import {
+    CHANGE_INPUT,
+    ADD_ITEM,
+    DEL_ITEM,
+    GET_LIST,
+    GET_TODOLIST,
+} from "./actionTypes";
 
 const defaultState = {
     inputValue: "write somthing",
@@ -30,6 +36,12 @@ export default (state = defaultState, action) => {
     if (action.type === GET_LIST) {
         let newState = JSON.parse(JSON.stringify(state));
         newState.list = action.data;
+        return newState;
+    }
+    if (action.type === GET_TODOLIST) {
+        let newState = JSON.parse(JSON.stringify(state));
+        console.log(action);
+        newState.list = action;
         return newState;
     }
 

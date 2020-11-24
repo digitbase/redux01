@@ -9,6 +9,7 @@ import {
     delItemAction,
     addItemAction,
     getListAction,
+    getTodoList,
 } from "./store/actionTypes";
 
 import Axios from "axios";
@@ -17,7 +18,7 @@ import { act } from "react-dom/test-utils";
 class TodoList extends Component {
     constructor(props) {
         super(props);
-        console.log(store.getState());
+        //console.log(store.getState());
         this.state = store.getState();
         this.clickBtn = this.clickBtn.bind(this);
         this.inputChange = this.inputChange.bind(this);
@@ -28,15 +29,8 @@ class TodoList extends Component {
     }
 
     componentDidMount() {
-        Axios.get("https://s.ohltr.com/api/test.php")
-            .then((res) => {
-                const data = res.data;
-                const action = getListAction(data.data);
-                store.dispatch(action);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
+        const action = getTodoList();
+        store.dispatch(action);
     }
     delItem(index) {
         console.log(index);
