@@ -1,6 +1,7 @@
 export const CHANGE_INPUT = "changeInput";
 export const ADD_ITEM = "addItem";
 export const DEL_ITEM = "delItem";
+export const GET_LIST = "getListAction";
 
 export const changeInputAction = (value) => ({
     type: CHANGE_INPUT,
@@ -14,4 +15,9 @@ export const addItemAction = () => ({
 export const delItemAction = (index) => ({
     type: DEL_ITEM,
     index,
+});
+
+export const getListAction = (data) => ({
+    type: GET_LIST,
+    data,
 });
