@@ -1,7 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import "antd/dist/antd.css";
-import { Input, Button, List } from "antd";
+import TodoListUI from "./TodoListUI";
+//import { Input, Button, List } from "antd";
+
 import store from "./store";
+import {
+    changeInputAction,
+    delItemAction,
+    addItemAction,
+} from "./store/actionTypes";
 
 class TodoList extends Component {
     constructor(props) {
@@ -11,21 +18,25 @@ class TodoList extends Component {
         this.clickBtn = this.clickBtn.bind(this);
         this.inputChange = this.inputChange.bind(this);
         this.storeChange = this.storeChange.bind(this);
-        //this.delItem = this.delItem.bind(this);
+        this.delItem = this.delItem.bind(this);
+
         store.subscribe(this.storeChange);
     }
     delItem(index) {
-        console.log(index);
-        const action = { type: "delItem", index: index };
+        const action = delItemAction(index);
         store.dispatch(action);
     }
     clickBtn() {
-        const action = { type: "addItem" };
+        const action = addItemAction();
         store.dispatch(action);
     }
     inputChange(e) {
-        const action = { type: "changeInput", value: e.target.value };
+        const action = changeInputAction(e.target.value);
         store.dispatch(action);
+    }
+
+    delItem2(obj, index) {
+        console.log(obj);
     }
 
     storeChange() {
@@ -33,30 +44,15 @@ class TodoList extends Component {
     }
     render() {
         return (
-            <div style={{ margin: 10 }}>
-                <div>
-                    <Input
-                        value={this.state.inputValue}
-                        onChange={this.inputChange}
-                        placeholder="write something"
-                        style={{ width: "250px", marginRight: 10 }}
-                    />
-                    <Button onClick={this.clickBtn} type="primary">
-                        增加
-                    </Button>
-                </div>
-                <div style={{ margin: "10px", width: "300px" }}>
-                    <List
-                        bordered
-                        dataSource={this.state.list}
-                        renderItem={(item, index) => (
-                            <List.Item onClick={this.delItem.bind(this, index)}>
-                                {item}
-                            </List.Item>
-                        )}
-                    />
-                </div>
-            </div>
+            <Fragment>
+                <TodoListUI
+                    inputValue={this.state.value}
+                    inputChange={this.inputChange}
+                    clickBtn={this.clickBtn}
+                    list={this.state.list}
+                    delItem={this.delItem}
+                />
+            </Fragment>
         );
     }
 }
